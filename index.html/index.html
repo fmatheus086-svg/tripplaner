@@ -34,6 +34,75 @@
             </p>
         </section>
 
+        <section id="cadastro">
+    <h2>Cadastrar nova viagem</h2>
+
+    <p>Preencha as informações abaixo para adicionar uma nova viagem.</p>
+
+    <form>
+        <fieldset>
+            <legend>Informações da viagem</legend>
+
+            <p>
+                <label for="destino">Destino:</label>
+                <input type="text" id="destino" name="destino" required>
+            </p>
+
+            <p>
+                <label for="pais">País:</label>
+                <input type="text" id="pais" name="pais" required>
+            </p>
+
+            <p>
+                <label for="data-ida">Data de ida:</label>
+                <input type="date" id="data-ida" name="data-ida" required>
+            </p>
+
+            <p>
+                <label for="data-volta">Data de volta:</label>
+                <input type="date" id="data-volta" name="data-volta" required>
+            </p>
+
+            <p>
+                <label for="orcamento">Orçamento:</label>
+                <input
+                    type="number"
+                    id="orcamento"
+                    name="orcamento"
+                    min="0"
+                    step="0.01"
+                    placeholder="0,00"
+                >
+            </p>
+
+            <p>
+                <label for="status">Status da viagem:</label>
+                <select id="status" name="status">
+                    <option value="planejamento">Em planejamento</option>
+                    <option value="confirmada">Confirmada</option>
+                    <option value="andamento">Em andamento</option>
+                    <option value="concluida">Concluída</option>
+                    <option value="cancelada">Cancelada</option>
+                </select>
+            </p>
+
+            <p>
+                <label for="descricao">Descrição:</label>
+                <textarea
+                    id="descricao"
+                    name="descricao"
+                    rows="5"
+                    placeholder="Adicione informações sobre a viagem"
+                ></textarea>
+            </p>
+
+            <button type="submit">Cadastrar viagem</button>
+            <button type="reset">Limpar</button>
+        </fieldset>
+    </form>
+</section>
+
+
     </main>
 
     <footer>
