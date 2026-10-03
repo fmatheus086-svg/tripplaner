@@ -1,1 +1,0 @@
-// As funcionalidades do TripPlanner serão implementadas nas próximas etapas.
