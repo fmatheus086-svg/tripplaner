@@ -110,6 +110,39 @@
 
         <p>Confira as viagens cadastradas no TripPlanner.</p>
 
+        <form>
+    <p>
+        <label for="pesquisa">Pesquisar viagem:</label>
+        <input
+            type="search"
+            id="pesquisa"
+            name="pesquisa"
+            placeholder="Digite o destino"
+        >
+    </p>
+
+    <p>
+        <label for="filtro-status">Filtrar por status:</label>
+        <select id="filtro-status" name="filtro-status">
+            <option value="todos">Todos</option>
+            <option value="planejamento">Em planejamento</option>
+            <option value="confirmada">Confirmada</option>
+            <option value="concluida">Concluída</option>
+        </select>
+    </p>
+
+    <p>
+        <label for="ordenacao">Ordenar por:</label>
+        <select id="ordenacao" name="ordenacao">
+            <option value="destino">Destino</option>
+            <option value="data">Data da viagem</option>
+            <option value="orcamento">Orçamento</option>
+        </select>
+    </p>
+
+    <button type="button">Pesquisar</button>
+</form>
+
         <article>
             <h3>Paris, França</h3>
             <p><strong>Data de ida:</strong> 10/01/2027</p>
