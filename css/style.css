@@ -1,0 +1,109 @@
+
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f7fb;
+    color: #333333;
+    margin: 0;
+    padding: 0;
+}
+
+header {
+    background-color: #173d70;
+    color: white;
+    padding: 25px;
+}
+
+header h1 {
+    margin: 0;
+    font-size: 32px;
+}
+
+header p {
+    margin-top: 10px;
+}
+
+nav ul {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px;
+    list-style: none;
+    padding: 0;
+}
+
+nav a {
+    color: white;
+    text-decoration: none;
+    padding: 10px;
+    display: inline-block;
+}
+
+nav a:hover {
+    background-color: #315889;
+    border-radius: 5px;
+}
+
+main {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 24px 16px;
+}
+
+#cadastro {
+    background-color: white;
+    padding: 24px;
+    border-radius: 12px;
+    margin: 24px 0;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+}
+
+#cadastro fieldset {
+    border: 1px solid #cccccc;
+    border-radius: 8px;
+    padding: 20px;
+    min-width: 0;
+}
+
+#cadastro legend {
+    font-weight: bold;
+    color: #173d70;
+    padding: 0 10px;
+}
+
+#cadastro input:not([type="submit"]):not([type="reset"]),
+#cadastro select,
+#cadastro textarea {
+    padding: 10px;
+    border: 1px solid #b8c4d1;
+    border-radius: 6px;
+    font-family: Arial, sans-serif;
+    font-size: 15px;
+    background-color: #ffffff;
+    width: 100%;
+    max-width: 350px;
+    box-sizing: border-box;
+}
+
+#cadastro input:focus-visible,
+#cadastro select:focus-visible,
+#cadastro textarea:focus-visible {
+    outline: 3px solid #80b7ff;
+    outline-offset: 2px;
+    border-color: #173d70;
+}
+
+#cadastro label {
+    font-weight: 500;
+    color: #333333;
+}
+
+#cadastro textarea {
+    min-height: 100px;
+    resize: vertical;
+}
+
+#cadastro fieldset p {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin-bottom: 20px;
+}
