@@ -107,3 +107,169 @@ main {
     gap: 8px;
     margin-bottom: 20px;
 }
+
+#cadastro button {
+    padding: 12px 20px;
+    border: none;
+    border-radius: 6px;
+    font-size: 15px;
+    cursor: pointer;
+    margin-top: 10px;
+}
+
+#cadastro button[type="submit"] {
+    background-color: #173d70;
+    color: white;
+}
+
+#cadastro button[type="reset"] {
+    background-color: #e5e7eb;
+    color: #333333;
+}
+
+#cadastro button[type="submit"]:hover {
+    background-color: #315889;
+}
+
+#cadastro button[type="reset"]:hover {
+    background-color: #cbd5e1;
+}
+
+#cadastro button:focus {
+    outline: 3px solid #80b7ff;
+    outline-offset: 2px;
+}
+
+#viagens {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+    margin-top: 30px;
+}
+
+#viagens > h2,
+#viagens > p,
+#viagens > form {
+    grid-column: 1 / -1;
+}
+
+#viagens article {
+    background-color: white;
+    padding: 20px;
+    border: 1px solid #dddddd;
+    border-radius: 10px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+}
+
+#viagens article h3 {
+    color: #173d70;
+    margin-top: 0;
+}
+
+#viagens article p {
+    line-height: 1.6;
+}
+
+#viagens article a {
+    color: #173d70;
+    font-weight: bold;
+}
+
+#viagens form {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    align-items: end;
+    background-color: white;
+    padding: 20px;
+    border-radius: 10px;
+}
+
+#viagens form p {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin: 0;
+}
+
+#viagens form label {
+    font-weight: bold;
+    color: #333333;
+}
+
+#viagens form input,
+#viagens form select {
+    padding: 10px;
+    border: 1px solid #b8c4d1;
+    border-radius: 6px;
+    font-size: 15px;
+    background-color: white;
+    max-width: 100%;
+    box-sizing: border-box;
+}
+
+#viagens form button {
+    padding: 11px 20px;
+    background-color: #173d70;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 15px;
+}
+
+#viagens form button:hover {
+    background-color: #315889;
+}
+
+#viagens form input:focus,
+#viagens form select:focus,
+#viagens form button:focus {
+    outline: 3px solid #80b7ff;
+    outline-offset: 2px;
+}
+
+#viagens article a,
+#viagens article button {
+    display: inline-block;
+    padding: 10px 14px;
+    border: none;
+    border-radius: 6px;
+    font-size: 14px;
+    text-decoration: none;
+    cursor: pointer;
+    margin-top: 10px;
+}
+
+#viagens article a {
+    background-color: #173d70;
+    color: white;
+}
+
+#viagens article button {
+    background-color: #e5e7eb;
+    color: #333333;
+}
+
+#viagens article button:last-child {
+    background-color: #b42318;
+    color: white;
+}
+
+#viagens article a:hover {
+    background-color: #315889;
+}
+
+#viagens article button:hover {
+    background-color: #cbd5e1;
+}
+
+#viagens article button:last-child:hover {
+    background-color: #8f1c13;
+}
+
+#viagens article a:focus,
+#viagens article button:focus {
+    outline: 3px solid #80b7ff;
+    outline-offset: 2px;
+}
