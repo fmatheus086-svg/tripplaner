@@ -273,3 +273,40 @@ main {
     outline: 3px solid #80b7ff;
     outline-offset: 2px;
 }
+
+@media (max-width: 768px) {
+    header {
+        padding: 20px;
+    }
+
+    main {
+        padding: 15px;
+    }
+
+    #cadastro {
+        padding: 15px;
+    }
+
+    #viagens {
+        grid-template-columns: 1fr;
+    }
+
+    #viagens form {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    #viagens form p {
+        width: 100%;
+    }
+
+    #viagens form input,
+    #viagens form select {
+        width: 100%;
+    }
+
+    #viagens form button {
+        width: 100%;
+    }
+}
+
