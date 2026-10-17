@@ -1,0 +1,36 @@
+
+main section {
+    background-color: white;
+    padding: 25px;
+    margin-bottom: 25px;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+}
+
+main section h2 {
+    color: #173d70;
+    margin-top: 0;
+}
+
+main section h3 {
+    color: #173d70;
+}
+
+main section p {
+    line-height: 1.6;
+}
+
+main article {
+    background-color: #f4f7fb;
+    padding: 20px;
+    margin-bottom: 15px;
+    border: 1px solid #dddddd;
+    border-radius: 8px;
+}
+
+footer {
+    background-color: #173d70;
+    color: white;
+    text-align: center;
+    padding: 20px;
+}
