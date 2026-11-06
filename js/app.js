@@ -1,8 +1,16 @@
 
 "use strict";
 
-let viagens = [];
+
+let viagens = JSON.parse(localStorage.getItem("viagens")) || [];
 let proximoId = 1;
+
+for (const viagem of viagens) {
+    if (viagem.id >= proximoId) {
+        proximoId = viagem.id + 1;
+    }
+}
+
 
 const formulario = document.querySelector("#cadastro form");
 
@@ -20,10 +28,14 @@ formulario.addEventListener("submit", function(evento) {
         descricao: document.querySelector("#descricao").value
     };
 
-    viagens.push(viagem);
-    proximoId++;
+    
+viagens.push(viagem);
+proximoId++;
 
-    console.log(viagens);
+localStorage.setItem("viagens", JSON.stringify(viagens));
+
+mostrarViagens();
+
 });
 
 const campoDestino = document.querySelector("#destino");
@@ -158,3 +170,38 @@ formulario.addEventListener("reset", function() {
     clearTimeout(tempoBusca);
     numeroBusca++;
 });
+
+
+function mostrarViagens() {
+    const secao = document.querySelector("#viagens");
+    const artigos = secao.querySelectorAll("article");
+
+    for (const artigo of artigos) {
+        artigo.remove();
+    }
+
+    for (const viagem of viagens) {
+        const artigo = document.createElement("article");
+
+        const titulo = document.createElement("h3");
+        titulo.textContent = viagem.destino + ", " + viagem.pais;
+        artigo.appendChild(titulo);
+
+        const dados = [
+            "Data de ida: " + viagem.dataIda,
+            "Data de volta: " + viagem.dataVolta,
+            "Orçamento: R$ " + viagem.orcamento.toFixed(2),
+            "Status: " + viagem.status
+        ];
+
+        for (const dado of dados) {
+            const paragrafo = document.createElement("p");
+            paragrafo.textContent = dado;
+            artigo.appendChild(paragrafo);
+        }
+
+        secao.appendChild(artigo);
+    }
+}
+
+mostrarViagens();
