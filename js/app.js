@@ -4,6 +4,7 @@
 
 let viagens = JSON.parse(localStorage.getItem("viagens")) || [];
 let proximoId = 1;
+let idEmEdicao = null;
 
 for (const viagem of viagens) {
     if (viagem.id >= proximoId) {
@@ -29,12 +30,26 @@ formulario.addEventListener("submit", function(evento) {
     };
 
     
-viagens.push(viagem);
-proximoId++;
+
+if (idEmEdicao === null) {
+    viagens.push(viagem);
+    proximoId++;
+} else {
+    for (let i = 0; i < viagens.length; i++) {
+        if (viagens[i].id === idEmEdicao) {
+            viagem.id = idEmEdicao;
+            viagens[i] = viagem;
+            break;
+        }
+    }
+}
 
 localStorage.setItem("viagens", JSON.stringify(viagens));
 
 mostrarViagens();
+formulario.reset();
+idEmEdicao = null;
+document.querySelector('#cadastro button[type="submit"]').textContent = "Cadastrar viagem";
 
 });
 
@@ -199,6 +214,57 @@ function mostrarViagens() {
             paragrafo.textContent = dado;
             artigo.appendChild(paragrafo);
         }
+        
+const botaoEditar = document.createElement("button");
+botaoEditar.type = "button";
+botaoEditar.textContent = "Editar";
+
+botaoEditar.addEventListener("click", function() {
+    idEmEdicao = viagem.id;
+
+    campoPais.value = viagem.pais;
+    campoDestino.disabled = false;
+    campoDestino.value = viagem.destino;
+
+    document.querySelector("#data-ida").value = viagem.dataIda;
+    document.querySelector("#data-volta").value = viagem.dataVolta;
+    document.querySelector("#orcamento").value = viagem.orcamento;
+    document.querySelector("#status").value = viagem.status;
+    document.querySelector("#descricao").value = viagem.descricao;
+
+    document.querySelector('#cadastro button[type="submit"]').textContent = "Salvar alterações";
+
+    document.querySelector("#cadastro").scrollIntoView();
+});
+
+artigo.appendChild(botaoEditar);
+
+const botaoExcluir = document.createElement("button");
+botaoExcluir.type = "button";
+botaoExcluir.textContent = "Excluir";
+botaoExcluir.className = "excluir";
+
+botaoExcluir.addEventListener("click", function() {
+    const confirmar = confirm("Deseja realmente excluir esta viagem?");
+
+    if (confirmar) {
+        viagens = viagens.filter(function(item) {
+            return item.id !== viagem.id;
+        });
+
+        localStorage.setItem("viagens", JSON.stringify(viagens));
+
+        if (idEmEdicao === viagem.id) {
+            formulario.reset();
+        }
+
+        mostrarViagens();
+        alert("Viagem excluída com sucesso!");
+    }
+});
+
+artigo.appendChild(botaoExcluir);
+
 
         secao.appendChild(artigo);
     }

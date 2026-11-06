@@ -251,7 +251,7 @@ main {
     color: #333333;
 }
 
-#viagens article button:last-child {
+#viagens article button.excluir {
     background-color: #b42318;
     color: white;
 }
@@ -264,7 +264,7 @@ main {
     background-color: #cbd5e1;
 }
 
-#viagens article button:last-child:hover {
+#viagens article button.excluir:hover {
     background-color: #8f1c13;
 }
 
