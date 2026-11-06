@@ -184,31 +184,31 @@ formulario.addEventListener("submit", function(evento) {
         alert("Preencha o país e o destino.");
         return;
     }
-    
-if (idEmEdicao !== null) {
-    const viagemAnterior = viagens.find(function(item) {
-        return item.id === idEmEdicao;
-    });
 
-    if (viagemAnterior) {
-        const roteiro = viagemAnterior.roteiro || [];
-        let totalPlanejado = 0;
+    if (idEmEdicao !== null) {
+        const viagemAnterior = viagens.find(function(item) {
+            return item.id === idEmEdicao;
+        });
 
-        for (const atividade of roteiro) {
-            totalPlanejado += Number(atividade.custo);
+        if (viagemAnterior) {
+            const roteiro = viagemAnterior.roteiro || [];
+            let totalPlanejado = 0;
 
-            if (atividade.data < dataIda || atividade.data > dataVolta) {
-                alert("Existem atividades fora das novas datas da viagem.");
+            for (const atividade of roteiro) {
+                totalPlanejado += Number(atividade.custo);
+
+                if (atividade.data < dataIda || atividade.data > dataVolta) {
+                    alert("Existem atividades fora das novas datas da viagem.");
+                    return;
+                }
+            }
+
+            if (orcamento < totalPlanejado) {
+                alert("O orçamento não pode ser menor que os custos já planejados.");
                 return;
             }
         }
-
-        if (orcamento < totalPlanejado) {
-            alert("O orçamento não pode ser menor que os custos já planejados.");
-            return;
-        }
     }
-}
 
     if (idEmEdicao === null) {
         viagem.roteiro = [];
@@ -333,6 +333,8 @@ function mostrarViagens() {
             document.querySelector('#cadastro button[type="submit"]').textContent =
                 "Salvar alterações";
 
+            atualizarPainelDestino();
+
             document.querySelector("#cadastro").scrollIntoView();
         });
 
@@ -380,7 +382,6 @@ botaoPesquisar.addEventListener("click", mostrarViagens);
 const seletorStatus = document.querySelector("#filtro-status");
 const seletorOrdenacao = document.querySelector("#ordenacao");
 
-
 const novosStatus = [
     ["andamento", "Em andamento"],
     ["cancelada", "Cancelada"]
@@ -394,8 +395,196 @@ for (const status of novosStatus) {
     seletorStatus.appendChild(opcao);
 }
 
-
 seletorStatus.addEventListener("change", mostrarViagens);
 seletorOrdenacao.addEventListener("change", mostrarViagens);
 
 mostrarViagens();
+
+const secaoCadastro = document.querySelector("#cadastro");
+const formularioCadastro = secaoCadastro.querySelector("form");
+
+const layoutCadastro = document.createElement("div");
+layoutCadastro.className = "cadastro-layout";
+
+const blocoFormulario = document.createElement("div");
+blocoFormulario.className = "bloco-formulario";
+
+const painelDestino = document.createElement("aside");
+painelDestino.className = "painel-destino";
+
+painelDestino.innerHTML = `
+    <img id="imagem-preview-destino" src="https://images.unsplash.com/photo-1476514525535-07fb3b4ae5f1?auto=format&fit=crop&w=1200&q=80" alt="Destino da viagem">
+    <div class="painel-conteudo">
+        <span class="painel-pais" id="badge-preview-pais">Destino em destaque</span>
+        <h3 id="titulo-preview-destino">Escolha sua próxima viagem</h3>
+        <p id="texto-preview-destino">Preencha país e destino para visualizar uma prévia mais bonita da viagem.</p>
+    </div>
+    <div class="painel-extra">
+        <div class="painel-item">
+            <span>País</span>
+            <strong id="info-preview-pais">-</strong>
+        </div>
+        <div class="painel-item">
+            <span>Status</span>
+            <strong id="info-preview-status">-</strong>
+        </div>
+        <div class="painel-item">
+            <span>Orçamento</span>
+            <strong id="info-preview-orcamento">R$ 0,00</strong>
+        </div>
+    </div>
+`;
+
+secaoCadastro.appendChild(layoutCadastro);
+blocoFormulario.appendChild(formularioCadastro);
+layoutCadastro.appendChild(blocoFormulario);
+layoutCadastro.appendChild(painelDestino);
+
+const imagemPreviewDestino = document.querySelector("#imagem-preview-destino");
+const badgePreviewPais = document.querySelector("#badge-preview-pais");
+const tituloPreviewDestino = document.querySelector("#titulo-preview-destino");
+const textoPreviewDestino = document.querySelector("#texto-preview-destino");
+const infoPreviewPais = document.querySelector("#info-preview-pais");
+const infoPreviewStatus = document.querySelector("#info-preview-status");
+const infoPreviewOrcamento = document.querySelector("#info-preview-orcamento");
+const campoStatusPreview = document.querySelector("#status");
+const campoOrcamentoPreview = document.querySelector("#orcamento");
+
+const nomesStatusPreview = {
+    planejamento: "Em planejamento",
+    confirmada: "Confirmada",
+    andamento: "Em andamento",
+    concluida: "Concluída",
+    cancelada: "Cancelada"
+};
+
+const fotoPadrao = "https://images.unsplash.com/photo-1476514525535-07fb3b4ae5f1?auto=format&fit=crop&w=1200&q=80";
+
+let tempoFoto;
+let numeroFoto = 0;
+
+imagemPreviewDestino.onerror = function() {
+    imagemPreviewDestino.onerror = null;
+    imagemPreviewDestino.src = fotoPadrao;
+};
+
+function buscarFotoCidade(destino, pais) {
+    clearTimeout(tempoFoto);
+    numeroFoto++;
+
+    const buscaAtual = numeroFoto;
+
+    imagemPreviewDestino.src = fotoPadrao;
+
+    if (destino.length < 3 || pais === "") {
+        return;
+    }
+
+    const cidadeSelecionada = sugestoesDestinos.find(function(cidade) {
+        return cidade.name.toLowerCase() === destino.toLowerCase();
+    });
+
+    const regiao = cidadeSelecionada
+        ? cidadeSelecionada.admin1 || pais
+        : pais;
+
+    tempoFoto = setTimeout(function() {
+        const pesquisa = destino + " " + regiao;
+
+        const endereco = "https://en.wikipedia.org/w/api.php?action=query"
+            + "&format=json"
+            + "&formatversion=2"
+            + "&generator=search"
+            + "&gsrsearch=" + encodeURIComponent(pesquisa)
+            + "&gsrlimit=5"
+            + "&prop=pageimages"
+            + "&piprop=thumbnail"
+            + "&pithumbsize=1200"
+            + "&pilimit=5"
+            + "&origin=*";
+
+        fetch(endereco)
+            .then(function(resposta) {
+                if (!resposta.ok) {
+                    throw new Error("Erro ao buscar imagem");
+                }
+
+                return resposta.json();
+            })
+            .then(function(dados) {
+                if (buscaAtual !== numeroFoto) {
+                    return;
+                }
+
+                const paginas = dados.query
+                    ? dados.query.pages || []
+                    : [];
+
+                paginas.sort(function(a, b) {
+                    return a.index - b.index;
+                });
+
+                const pagina = paginas.find(function(item) {
+                    return item.thumbnail &&
+                        item.title.toLowerCase().includes(destino.toLowerCase());
+                });
+
+                if (pagina) {
+                    imagemPreviewDestino.src = pagina.thumbnail.source;
+                }
+            })
+            .catch(function() {
+                console.log("Não foi possível carregar a foto do destino.");
+            });
+    }, 600);
+}
+
+function atualizarPainelDestino() {
+    const destino = campoDestino.value.trim();
+    const pais = campoPais.value.trim();
+    const status = campoStatusPreview.value;
+    const orcamento = Number(campoOrcamentoPreview.value) || 0;
+
+    infoPreviewPais.textContent = pais || "-";
+    infoPreviewStatus.textContent = nomesStatusPreview[status] || "-";
+
+    infoPreviewOrcamento.textContent = orcamento.toLocaleString("pt-BR", {
+        style: "currency",
+        currency: "BRL"
+    });
+
+    if (destino === "") {
+        badgePreviewPais.textContent = "Destino em destaque";
+        tituloPreviewDestino.textContent = "Escolha sua próxima viagem";
+        textoPreviewDestino.textContent = "Preencha país e destino para visualizar uma prévia mais bonita da viagem.";
+
+        clearTimeout(tempoFoto);
+        numeroFoto++;
+        imagemPreviewDestino.src = fotoPadrao;
+        imagemPreviewDestino.alt = "Paisagem de viagem";
+
+        return;
+    }
+
+    badgePreviewPais.textContent = pais || "Destino selecionado";
+    tituloPreviewDestino.textContent = pais
+        ? destino + ", " + pais
+        : destino;
+
+    textoPreviewDestino.textContent =
+        "Seu destino já está ganhando uma prévia visual para deixar o planejamento mais bonito e interativo.";
+
+    imagemPreviewDestino.alt = destino;
+    buscarFotoCidade(destino, pais);
+}
+
+campoPais.addEventListener("input", atualizarPainelDestino);
+campoDestino.addEventListener("input", atualizarPainelDestino);
+campoStatusPreview.addEventListener("change", atualizarPainelDestino);
+campoOrcamentoPreview.addEventListener("input", atualizarPainelDestino);
+
+formulario.addEventListener("reset", function() {
+    setTimeout(atualizarPainelDestino, 0);
+});
+
+atualizarPainelDestino();
