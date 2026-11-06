@@ -34,3 +34,77 @@ footer {
     text-align: center;
     padding: 20px;
 }
+main section button {
+    padding: 10px 15px;
+    background-color: #173d70;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    margin-bottom: 20px;
+}
+
+main section button:hover {
+    background-color: #315889;
+}
+
+main section button:focus {
+    outline: 3px solid #80b7ff;
+    outline-offset: 2px;
+}
+
+.formulario-atracao {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    background-color: white;
+    padding: 20px;
+    margin-top: 15px;
+    border: 1px solid #b8c4d1;
+    border-radius: 10px;
+    max-width: 420px;
+}
+
+.formulario-atracao label {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    font-weight: bold;
+    color: #173d70;
+}
+
+.formulario-atracao input {
+    padding: 12px;
+    border: 1px solid #b8c4d1;
+    border-radius: 6px;
+    font-size: 16px;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.formulario-atracao input:focus {
+    outline: 3px solid #80b7ff;
+    outline-offset: 2px;
+}
+
+.formulario-atracao p {
+    color: #b42318;
+    margin: 0;
+}
+
+.formulario-atracao p:empty {
+    display: none;
+}
+
+.formulario-atracao button {
+    margin-bottom: 0;
+}
+
+.formulario-atracao .cancelar {
+    background-color: #e5e7eb;
+    color: #333333;
+}
+
+.formulario-atracao .cancelar:hover {
+    background-color: #cbd5e1;
+}

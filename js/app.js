@@ -214,6 +214,12 @@ function mostrarViagens() {
             paragrafo.textContent = dado;
             artigo.appendChild(paragrafo);
         }
+
+const linkDetalhes = document.createElement("a");
+linkDetalhes.href = "pages/detalhes.html?id=" + viagem.id;
+linkDetalhes.textContent = "Ver detalhes";
+
+artigo.appendChild(linkDetalhes);
         
 const botaoEditar = document.createElement("button");
 botaoEditar.type = "button";
