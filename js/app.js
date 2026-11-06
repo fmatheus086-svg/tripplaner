@@ -184,6 +184,31 @@ formulario.addEventListener("submit", function(evento) {
         alert("Preencha o país e o destino.");
         return;
     }
+    
+if (idEmEdicao !== null) {
+    const viagemAnterior = viagens.find(function(item) {
+        return item.id === idEmEdicao;
+    });
+
+    if (viagemAnterior) {
+        const roteiro = viagemAnterior.roteiro || [];
+        let totalPlanejado = 0;
+
+        for (const atividade of roteiro) {
+            totalPlanejado += Number(atividade.custo);
+
+            if (atividade.data < dataIda || atividade.data > dataVolta) {
+                alert("Existem atividades fora das novas datas da viagem.");
+                return;
+            }
+        }
+
+        if (orcamento < totalPlanejado) {
+            alert("O orçamento não pode ser menor que os custos já planejados.");
+            return;
+        }
+    }
+}
 
     if (idEmEdicao === null) {
         viagem.roteiro = [];

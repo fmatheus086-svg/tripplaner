@@ -114,7 +114,6 @@ for (const valor of valores) {
 
 secaoRoteiro.appendChild(painel);
 
-    secaoRoteiro.appendChild(resumo);
 
     if (viagem.roteiro.length === 0) {
         const mensagem = document.createElement("p");
