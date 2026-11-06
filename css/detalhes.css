@@ -108,3 +108,50 @@ main section button:focus {
 .formulario-atracao .cancelar:hover {
     background-color: #cbd5e1;
 }
+main section .remover-atividade {
+    background-color: #b42318;
+    color: white;
+    margin-top: 10px;
+}
+
+main section .remover-atividade:hover {
+    background-color: #8f1c13;
+}
+.dia-roteiro {
+    color: #173d70;
+    font-size: 18px;
+    margin-top: 25px;
+    margin-bottom: 12px;
+}
+
+.resumo-financeiro {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 15px;
+    margin: 20px 0;
+}
+
+.resumo-financeiro div {
+    background-color: #f4f7fb;
+    padding: 18px;
+    border: 1px solid #dce3ea;
+    border-radius: 8px;
+}
+
+.resumo-financeiro strong {
+    display: block;
+    color: #173d70;
+    font-size: 14px;
+}
+
+.resumo-financeiro p {
+    font-size: 20px;
+    font-weight: bold;
+    margin: 10px 0 0;
+}
+
+@media (max-width: 768px) {
+    .resumo-financeiro {
+        grid-template-columns: 1fr;
+    }
+}

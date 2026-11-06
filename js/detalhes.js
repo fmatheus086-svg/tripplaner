@@ -74,7 +74,7 @@ viagem.roteiro = viagem.roteiro || [];
 const secaoRoteiro = document.querySelectorAll("main section")[1];
 
 function atualizarRoteiro() {
-    const elementos = secaoRoteiro.querySelectorAll("p, article");
+    const elementos = secaoRoteiro.querySelectorAll("p, article, .dia-roteiro, .resumo-financeiro");
 
     for (const elemento of elementos) {
         elemento.remove();
@@ -85,22 +85,34 @@ function atualizarRoteiro() {
     for (const atividade of viagem.roteiro) {
         total += Number(atividade.custo);
     }
+    
+const painel = document.createElement("div");
+painel.className = "resumo-financeiro";
 
-    const resumo = document.createElement("p");
+const valores = [
+    ["Orçamento total", Number(viagem.orcamento)],
+    ["Valor planejado", total],
+    ["Saldo disponível", Number(viagem.orcamento) - total]
+];
 
-    resumo.textContent =
-        "Orçamento: " + Number(viagem.orcamento).toLocaleString("pt-BR", {
-            style: "currency",
-            currency: "BRL"
-        }) +
-        " | Planejado: " + total.toLocaleString("pt-BR", {
-            style: "currency",
-            currency: "BRL"
-        }) +
-        " | Disponível: " + (viagem.orcamento - total).toLocaleString("pt-BR", {
-            style: "currency",
-            currency: "BRL"
-        });
+for (const valor of valores) {
+    const card = document.createElement("div");
+
+    const titulo = document.createElement("strong");
+    titulo.textContent = valor[0];
+
+    const quantia = document.createElement("p");
+    quantia.textContent = valor[1].toLocaleString("pt-BR", {
+        style: "currency",
+        currency: "BRL"
+    });
+
+    card.appendChild(titulo);
+    card.appendChild(quantia);
+    painel.appendChild(card);
+}
+
+secaoRoteiro.appendChild(painel);
 
     secaoRoteiro.appendChild(resumo);
 
@@ -110,8 +122,29 @@ function atualizarRoteiro() {
         secaoRoteiro.appendChild(mensagem);
     }
 
-    for (const atividade of viagem.roteiro) {
-        const artigo = document.createElement("article");
+    
+const atividadesOrdenadas = viagem.roteiro.slice();
+
+atividadesOrdenadas.sort(function(a, b) {
+    return a.data.localeCompare(b.data);
+});
+
+let dataAnterior = "";
+
+for (const atividade of atividadesOrdenadas) {
+    if (atividade.data !== dataAnterior) {
+        const tituloDia = document.createElement("h3");
+        tituloDia.className = "dia-roteiro";
+        tituloDia.textContent = "Dia " +
+            atividade.data.split("-").reverse().join("/");
+
+        secaoRoteiro.appendChild(tituloDia);
+
+        dataAnterior = atividade.data;
+    }
+
+    const artigo = document.createElement("article");
+
 
         const titulo = document.createElement("h3");
         titulo.textContent = atividade.nome;
@@ -124,9 +157,40 @@ function atualizarRoteiro() {
                 currency: "BRL"
             });
 
-        artigo.appendChild(titulo);
-        artigo.appendChild(dados);
-        secaoRoteiro.appendChild(artigo);
+        
+artigo.appendChild(titulo);
+artigo.appendChild(dados);
+
+const botaoRemover = document.createElement("button");
+botaoRemover.type = "button";
+botaoRemover.textContent = "Remover atividade";
+botaoRemover.className = "remover-atividade";
+
+botaoRemover.addEventListener("click", function() {
+    const confirmar = confirm("Deseja remover esta atividade?");
+
+    if (confirmar) {
+        viagem.roteiro = viagem.roteiro.filter(function(item) {
+            return item !== atividade;
+        });
+
+        localStorage.setItem("viagens", JSON.stringify(viagens));
+
+        atualizarRoteiro();
+
+        for (const artigoAtracao of listaAtracoes.querySelectorAll("article")) {
+            if (artigoAtracao.querySelector("h3").textContent === atividade.nome) {
+                const botaoAdicionar = artigoAtracao.querySelector("button");
+                botaoAdicionar.disabled = false;
+                botaoAdicionar.textContent = "Adicionar ao roteiro";
+            }
+        }
+    }
+});
+
+artigo.appendChild(botaoRemover);
+secaoRoteiro.appendChild(artigo);
+
     }
 }
 
