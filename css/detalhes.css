@@ -155,3 +155,83 @@ main section .remover-atividade:hover {
         grid-template-columns: 1fr;
     }
 }
+
+* {
+    box-sizing: border-box;
+}
+
+html,
+body {
+    width: 100%;
+    max-width: 100%;
+    margin: 0;
+}
+
+main {
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+.capa-viagem {
+    width: 100%;
+    max-width: 100%;
+    height: 320px;
+    margin: 0 0 28px;
+    position: relative;
+    overflow: hidden;
+    border-radius: 16px;
+    background: linear-gradient(135deg, #173d70, #315889);
+}
+
+.capa-viagem > img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    max-width: 100%;
+    object-fit: cover;
+    object-position: center;
+}
+
+.capa-viagem > img[hidden] {
+    display: none;
+}
+
+.capa-conteudo {
+    position: absolute;
+    z-index: 2;
+    left: 30px;
+    bottom: 30px;
+    right: 30px;
+}
+
+.capa-conteudo h2 {
+    font-size: 32px;
+    color: white;
+    margin-bottom: 10px;
+}
+
+.capa-conteudo p {
+    color: white;
+}
+
+@media (max-width: 768px) {
+    main {
+        padding: 15px;
+    }
+
+    .capa-viagem {
+        height: 240px;
+    }
+
+    .capa-conteudo {
+        left: 20px;
+        right: 20px;
+        bottom: 20px;
+    }
+
+    .capa-conteudo h2 {
+        font-size: 24px;
+    }
+}
